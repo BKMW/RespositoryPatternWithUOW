@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Generic.UoW.Core;
 using Microsoft.AspNetCore.Mvc;
-using RepositoryPatternWithUOW.Core;
 using RepositoryPatternWithUOW.Core.Consts;
-using RepositoryPatternWithUOW.Core.Interfaces;
 using RepositoryPatternWithUOW.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RespositoryPatternWithUOW.Api.Controllers
 {

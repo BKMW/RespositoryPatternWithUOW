@@ -30,9 +30,19 @@ namespace RespositoryPatternWithUOW.Api
                     Configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
+            services.AddDbContext<ProductContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("ProductConnection"),
+                       b => b.MigrationsAssembly(typeof(ProductContext).Assembly.FullName)));
+
             //services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             // services.AddTransient<IUnitOfWork, UnitOfWork>();
-             services.AddTransient<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
+
+            services.AddTransient<IUnitOfWork<ProductContext>, UnitOfWork<ProductContext>>();
+
+            services.AddTransient<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RespositoryPatternWithUOW.Api", Version = "v1" });

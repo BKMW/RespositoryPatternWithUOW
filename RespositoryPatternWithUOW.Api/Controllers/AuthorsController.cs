@@ -1,6 +1,7 @@
 ﻿using Generic.UoW.Core;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternWithUOW.Core.Models;
+using RepositoryPatternWithUOW.EF;
 using System.Threading.Tasks;
 
 namespace RespositoryPatternWithUOW.Api.Controllers
@@ -9,9 +10,9 @@ namespace RespositoryPatternWithUOW.Api.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<ApplicationDbContext> _unitOfWork;
 
-        public AuthorsController(IUnitOfWork unitOfWork)
+        public AuthorsController(IUnitOfWork<ApplicationDbContext> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

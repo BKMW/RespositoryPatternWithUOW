@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RepositoryPatternWithUOW.Core.Products;
 
-namespace RepositoryPatternWithUOW.EF
+namespace RepositoryPatternWithUOW.Infra
 {
     public partial class ProductContext : DbContext
     {

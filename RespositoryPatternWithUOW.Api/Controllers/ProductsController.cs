@@ -2,7 +2,7 @@
 using Generic.UoW.Core.Consts;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternWithUOW.Core.Products;
-using RepositoryPatternWithUOW.EF;
+using RepositoryPatternWithUOW.Infra;
 
 namespace RespositoryPatternWithUOW.Api.Controllers
 {

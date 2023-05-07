@@ -2,12 +2,11 @@ using Generic.UoW.Core;
 using Generic.UoW.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using RepositoryPatternWithUOW.EF;
+using RepositoryPatternWithUOW.Infra;
 
 namespace RespositoryPatternWithUOW.Api
 {
@@ -25,15 +24,7 @@ namespace RespositoryPatternWithUOW.Api
         {
             services.AddControllers();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-
-            services.AddDbContext<ProductContext>(options =>
-               options.UseSqlServer(
-                   Configuration.GetConnectionString("ProductConnection"),
-                       b => b.MigrationsAssembly(typeof(ProductContext).Assembly.FullName)));
+            services.AddInfra(Configuration);
 
             //services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             // services.AddTransient<IUnitOfWork, UnitOfWork>();

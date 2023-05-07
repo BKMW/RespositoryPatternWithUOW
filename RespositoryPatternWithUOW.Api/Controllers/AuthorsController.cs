@@ -1,7 +1,7 @@
 ﻿using Generic.UoW.Core;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternWithUOW.Core.Models;
-using RepositoryPatternWithUOW.EF;
+using RepositoryPatternWithUOW.Infra;
 using System.Threading.Tasks;
 
 namespace RespositoryPatternWithUOW.Api.Controllers

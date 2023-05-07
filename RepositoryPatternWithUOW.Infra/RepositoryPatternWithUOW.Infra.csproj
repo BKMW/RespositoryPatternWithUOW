@@ -17,5 +17,4 @@
   <ItemGroup>
     <ProjectReference Include="..\RepositoryPatternWithUOW.Core\RepositoryPatternWithUOW.Core.csproj" />
   </ItemGroup>
-
 </Project>

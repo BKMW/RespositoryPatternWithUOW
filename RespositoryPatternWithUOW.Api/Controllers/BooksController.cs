@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternWithUOW.Core.Consts;
 using RepositoryPatternWithUOW.Core.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RespositoryPatternWithUOW.Api.Controllers
 {
@@ -23,9 +25,10 @@ namespace RespositoryPatternWithUOW.Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public List<Book> GetAll()
         {
-            return Ok(_unitOfWork.Repository<Book>().GetAll());
+            var books=_unitOfWork.Repository<Book>().GetAll().ToList();
+            return books;
         }
 
         [HttpGet("GetByName")]

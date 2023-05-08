@@ -1,6 +1,8 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using Generic.UoW.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RepositoryPatternWithUOW.Core.Models;
 using RepositoryPatternWithUOW.Infra;
@@ -10,7 +12,7 @@ namespace RepositoryPatternWithUOW.Test.Controllers.Test
 {
     public class BooksControllerTest
     {
-        private readonly IUnitOfWork<ApplicationDbContext> _unitOfWork;
+       // private readonly IUnitOfWork<ApplicationDbContext> _unitOfWork;
         private readonly Mock<IUnitOfWork<ApplicationDbContext>> _unitOfWorkMock;
         private readonly Fixture _fixture;
 
@@ -18,7 +20,7 @@ namespace RepositoryPatternWithUOW.Test.Controllers.Test
         {
             _fixture = new Fixture();
             _unitOfWorkMock = new Mock<IUnitOfWork<ApplicationDbContext>>();
-            _unitOfWork = _unitOfWorkMock.Object;
+           // _unitOfWork = _unitOfWorkMock.Object;
 
         }
         #region GetAll
@@ -27,13 +29,47 @@ namespace RepositoryPatternWithUOW.Test.Controllers.Test
         public void GetAll_Should_return_all_books()
         {
             //Arrange
-            List<Book> _books = _fixture.Create<List<Book>>();
-            BooksController booksController = new BooksController(_unitOfWork);
-            _unitOfWorkMock.Setup(temp => temp.Repository<Book>().GetAll()).Returns(_books);
+            List<Book> expectedItems = _fixture.Create<List<Book>>();
+            BooksController booksController = new BooksController(_unitOfWorkMock.Object);
+            _unitOfWorkMock.Setup(temp => temp.Repository<Book>().GetAll()).Returns(expectedItems);
             //Act
-            var books = booksController.GetAll();
+            var actualItems = booksController.GetAll();
             //Assert
-            books.Should().BeEquivalentTo(_books);
+            actualItems.Should().BeEquivalentTo(expectedItems);
+
+        }
+        #endregion
+
+        #region AddOne
+
+        [Fact]
+        public void AddOne_item_null_Should_return_exception()
+        {
+            //Arrange
+            Book dto = null;
+            BooksController booksController = new BooksController(_unitOfWorkMock.Object);
+            _unitOfWorkMock.Setup(temp => temp.Repository<Book>().Add(dto)).Returns(dto);
+            //Act
+            var result = booksController.AddOne(dto) as OkObjectResult;
+            //Assert
+          
+
+        }
+        [Fact]
+        public void AddOne_Should_return_book()
+        {
+            //Arrange
+            Book itemToCreate = _fixture.Create<Book>() ;
+            BooksController booksController = new BooksController(_unitOfWorkMock.Object);
+            _unitOfWorkMock.Setup(temp => temp.Repository<Book>().Add(itemToCreate)).Returns(itemToCreate);
+            //Act
+            var result = booksController.AddOne(itemToCreate) as OkObjectResult;
+            //Assert
+           // var createdItem=result?.Value as Book;
+           // Assert.IsType<Book>(result?.Value);
+            result.Value.Should().BeOfType< Book>();
+            result.StatusCode.Should().Be(StatusCodes.Status200OK);
+            result.Value.Should().Be(itemToCreate);
 
         }
         #endregion
